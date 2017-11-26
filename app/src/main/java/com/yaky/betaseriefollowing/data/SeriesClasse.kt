@@ -1,12 +1,13 @@
 package com.yaky.betaseriefollowing.data
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
 /*abstract class DataFromBetaSerie(val id: Long,
                                  val thetvdb_id : Long)*/
 // TODO inheritance forthe parameter from database sere
 
-data class Shows(val shows : List<Show>)
+data class Shows(@SerializedName("shows") val listShow : List<Show>)
 
 data class Show (val id : Long,
                  val thetvdb_id : Long,

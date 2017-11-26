@@ -29,7 +29,7 @@ class Request : Command<Shows>, AnkoLogger {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                info("Connection to server have fail")
+                info("Connection to server failed")
             }
             override fun onResponse(call: Call, response: Response) {
 
@@ -37,7 +37,7 @@ class Request : Command<Shows>, AnkoLogger {
                 info("response OK from server ")
                 val test :Shows
                 test = Gson().fromJson(result, Shows::class.java)
-                info{test.shows.first()}
+                info{test.listShow.first()}
             }
         }
         )
