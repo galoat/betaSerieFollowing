@@ -8,8 +8,6 @@ import com.yaky.betaseriefollowing.adapter.SerieListAdapter
 import com.yaky.betaseriefollowing.request.Request
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
     private val items = listOf(
@@ -26,13 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val listSeries : RecyclerView = find(R.id.listSeries)
-        val url = "https://api.betaseries.com/episodes/list?v=3.0"
+
         listSeries.layoutManager = LinearLayoutManager(this)
         listSeries.adapter = SerieListAdapter(items)
         doAsync {
-            Request(url).run()
-            uiThread { longToast("test") }
-
+           System.out.println(Request().execute())
         }
     }
 }
