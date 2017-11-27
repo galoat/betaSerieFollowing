@@ -6,19 +6,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.yaky.betaseriefollowing.adapter.SerieListAdapter
 import com.yaky.betaseriefollowing.request.Request
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.find
+import org.jetbrains.anko.*
 
-class MainActivity : AppCompatActivity() {
-    private val items = listOf(
-    "Serie1 - Sunny - 31/17",
-    "Tue 6/24 - Foggy - 21/8",
-    "Wed 6/25 - Cloudy - 22/17",
-    "Thurs 6/26 - Rainy - 18/11",
-    "Fri 6/27 - Foggy - 21/10",
-    "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-    "Sun 6/29 - Sunny - 20/7"
-    )
+class MainActivity : AppCompatActivity(), AnkoLogger {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +17,18 @@ class MainActivity : AppCompatActivity() {
         val listSeries : RecyclerView = find(R.id.listSeries)
 
         listSeries.layoutManager = LinearLayoutManager(this)
-        listSeries.adapter = SerieListAdapter(items)
         doAsync {
-           System.out.println(Request().execute())
+            val result = Request().execute()
+            if(result != null) {
+                info{result.listShow.first()}
+                uiThread {
+                    listSeries.adapter = SerieListAdapter(result)
+                }
+            }
+            else{
+                //TODO endel the case when  the resykt isnull
+                info{"Result null"}
+            }
         }
     }
 }
