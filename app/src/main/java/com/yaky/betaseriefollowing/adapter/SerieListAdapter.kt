@@ -13,10 +13,12 @@ class SerieListAdapter(val items: Shows) : RecyclerView.Adapter<SerieListAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //TODO : Better display
-        holder.textView.text = items.listShow[position].title
+        with(items[position]) {
+            holder.textView.text = title
+        }
     }
 
-    override fun getItemCount(): Int = items.listShow.size
+    override fun getItemCount(): Int = items.size
 
     class ViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
 

@@ -7,26 +7,34 @@ import java.util.*
                                  val thetvdb_id : Long)*/
 // TODO inheritance forthe parameter from database sere
 
-data class Shows(@SerializedName("shows") val listShow : List<Show>)
+data class Shows(@SerializedName("shows") val listShow : List<Serie>){
+    val size: Int
+        get() = listShow.size
+    operator fun get(position: Int): Serie = listShow[position]
+    operator fun iterator(): Iterator<Serie> = listShow.iterator()
+}
 
-data class Show (val id : Long,
+data class Serie(val id : Long,
                  val thetvdb_id : Long,
                  val imdb_id : String,
                  val title: String,
                  val remaining : Int,
-                 val unseen : List<Episode>
+                 @SerializedName("unseen") val episode : List<Episode>
                  )
 
-data class Episode(val id : Long,
-                   val thetvdb_id : Long,
-                   val youtube_id : String?,
+data class Episode(val title: String,
                    val season : Int,
                    val episode : Int,
                    val description : String,
                    val date : Date,
                    val user : UserSerieInfo,
-                   val resource_url : String?
+                   val resource_url : String?,
+                   @SerializedName("show") val episodeInfo : Show
 )
 
 data class UserSerieInfo(val seen : Boolean,
                          val downloaded : Boolean)
+
+data class Show(val id : Long,
+                val thevdb_Id : Long,
+                val title : String)
