@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.yaky.betaseriefollowing.adapter.SerieListAdapter
+import com.yaky.betaseriefollowing.data.Shows
 import com.yaky.betaseriefollowing.request.RequestToBetaSerie
 import org.jetbrains.anko.*
 
@@ -18,9 +19,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         listSeries.layoutManager = LinearLayoutManager(this)
         doAsync {
-            val result = RequestToBetaSerie().requestListSerie()
+            val result : Shows? = RequestToBetaSerie().requestListSerie()
             if(result != null) {
-                info{result.listShow.first()}
+                info{result.size}
                 uiThread {
                     listSeries.adapter = SerieListAdapter(result)
                 }

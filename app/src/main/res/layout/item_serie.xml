@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_height="wrap_content"
   android:padding="@dimen/spacing_xlarge"
   android:background="?attr/selectableItemBackground"
   android:gravity="center_vertical"
@@ -28,33 +28,56 @@
       android:layout_marginLeft="@dimen/spacing_xlarge"
       android:layout_marginRight="@dimen/spacing_xlarge"
       android:orientation="horizontal">
-      <TextView
-        android:id="@+id/title"
-        android:layout_width="219dp"
+      <LinearLayout
+        android:layout_width="281dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="Game Of throne"
-        />
-      <TextView
-        android:id="@+id/saison"
-        android:layout_width="26dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        tools:text="1"
-        />
-      <TextView
-        android:layout_width="29dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        tools:text="E"
-        />
-      <TextView
-        android:layout_width="29dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        tools:text="2"
-        />
+        android:layout_marginLeft="@dimen/spacing_xlarge"
+        android:layout_marginRight="@dimen/spacing_xlarge"
+        android:orientation="vertical">
+        <TextView
+          android:id="@+id/titleSerie"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.AppCompat.Large"
+          tools:text="Game Of throne"
+          />
+        <TextView
+          android:id="@+id/titleEpisode"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          tools:text="Les noce pourpres"
+          />
+
+        <LinearLayout
+          android:layout_width="281dp"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/spacing_xlarge"
+          android:layout_marginRight="@dimen/spacing_xlarge"
+          android:orientation="horizontal">
+          <TextView
+            android:id="@+id/saison"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            tools:text="1"
+            />
+          <TextView
+            android:layout_width="29dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            tools:text="E"
+            />
+          <TextView
+            android:id="@+id/episode"
+            android:layout_width="29dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            tools:text="2"
+            />
+        </LinearLayout>
       </LinearLayout>
+    </LinearLayout>
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

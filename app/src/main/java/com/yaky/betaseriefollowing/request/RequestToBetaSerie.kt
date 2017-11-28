@@ -16,14 +16,16 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
     private val client = OkHttpClient()
 
     companion object {
-        private val url = "https://api.betaseries.com/episodes/list?v=3.0"
+        private val urlListSerie = "https://api.betaseries.com/episodes/list?v=3.0"
+        private val image = "https://api.betaseries.com/episodes/list?v=3.0"
     }
+
 
 
     override fun requestListSerie() : Shows?{
         //TODO parameter shouldn't be hard coded
         info{"requestListSerie request"}
-        val request = Request.Builder().url(url)
+        val request = Request.Builder().url(urlListSerie)
                 .addHeader("X-BetaSeries-Key","76e51c0d8c9c" )
                 .addHeader("Authorization","Bearer c25f78a3e191" )
                 .addHeader("Accept"," application/json")

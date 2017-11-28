@@ -1,6 +1,8 @@
 package com.yaky.betaseriefollowing.data
 
 import com.google.gson.annotations.SerializedName
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import java.util.*
 
 /*abstract class DataFromBetaSerie(val id: Long,
@@ -20,7 +22,19 @@ data class Serie(val id : Long,
                  val title: String,
                  val remaining : Int,
                  @SerializedName("unseen") val episode : List<Episode>
-                 )
+                 ): AnkoLogger {
+    operator fun get(position: Int) : Episode = episode[position]
+
+    fun first(): Episode {
+        if(episode.isNotEmpty()){
+            /// TODO better exception
+            info{"Empty episode..."}
+            //return null;
+        }
+        return episode[0]
+
+    }
+}
 
 data class Episode(val title: String,
                    val season : Int,
