@@ -1,11 +1,11 @@
-package com.yaky.betaseriefollowing
+package com.yaky.betaseriefollowing.ui.adapter
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import com.yaky.betaseriefollowing.adapter.SerieListAdapter
+import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.Shows
-import com.yaky.betaseriefollowing.request.RequestToBetaSerie
+import com.yaky.betaseriefollowing.domain.request.RequestToBetaSerie
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync

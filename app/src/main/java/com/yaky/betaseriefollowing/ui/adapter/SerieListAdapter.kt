@@ -1,4 +1,4 @@
-package com.yaky.betaseriefollowing.adapter
+package com.yaky.betaseriefollowing.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

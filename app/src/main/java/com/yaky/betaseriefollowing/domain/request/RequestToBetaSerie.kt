@@ -1,4 +1,4 @@
-package com.yaky.betaseriefollowing.request
+package com.yaky.betaseriefollowing.domain.request
 
 
 import com.google.gson.Gson
