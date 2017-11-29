@@ -10,7 +10,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".ui.adapter.MainActivity">
+    <activity android:name="com.yaky.betaseriefollowing.ui.activities.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
