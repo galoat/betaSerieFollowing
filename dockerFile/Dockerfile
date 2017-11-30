@@ -4,7 +4,7 @@ FROM ubuntu:14.04
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:webupd8team/java && apt-get update && \
-    apt-get install oracle-java8-installer
+    apt-get install -y oracle-java8-installer
 
 # Install Deps
 RUN dpkg --add-architecture i386 && \
