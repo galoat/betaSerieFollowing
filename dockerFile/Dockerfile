@@ -4,10 +4,12 @@ FROM ubuntu:14.04
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:webupd8team/java && apt-get update && \
-    apt-get install -y oracle-java8-installer
+    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+    apt-get install -y oracle-java8-installer && \
+    apt-get clean 
 
 # Install Deps
-RUN dpkg --add-architecture i386 && \
+RUN dpkg --add-architecture i386 && \A
     apt-get update && \
     apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl && \
     apt-get clean
