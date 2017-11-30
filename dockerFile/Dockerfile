@@ -15,9 +15,9 @@ RUN dpkg --add-architecture i386 && \
     apt-get clean
 
 # Install Android SDK
-ENV ANDROID_SDK_VERSION=r25.0.1 \
-    ANDROID_BUILD_TOOLS_VERSION=26.0.2 \
-    ANDROID_API_LEVELS=android-25
+ENV ANDROID_SDK_VERSION=r25.2.5 \
+    ANDROID_BUILD_TOOLS_VERSION=23.0.3 \
+    ANDROID_API_LEVELS=android-23
 
 RUN cd /opt && \
     wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz && \
