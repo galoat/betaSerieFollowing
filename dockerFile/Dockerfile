@@ -33,5 +33,4 @@ RUN $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-26" "platforms;android
 RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository"
 RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
 RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-Source Repository
-  chibatching/docker-android-sdk
+Source Repository chibatching/docker-android-sdk
