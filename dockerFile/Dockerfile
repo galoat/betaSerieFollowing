@@ -1,32 +1,37 @@
-FROM ubuntu:14.04
+FROM java:8
 
-# Install Java7
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:webupd8team/java && apt-get update && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer && \
-    apt-get clean 
+MAINTAINER Takao Chiba <chibatching.apps@gmail.com>
 
-# Install Deps
 RUN dpkg --add-architecture i386 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     apt-get update && \
-    apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl && \
+    apt-get install -yq libc6:i386 libstdc++6:i386 zlib1g:i386 libncurses5:i386 build-essential libssl-dev ruby ruby-dev --no-install-recommends && \
     apt-get clean
+    
+RUN gem install bundler
 
-# Install Android SDK
-ENV ANDROID_SDK_VERSION=r25.2.5 \
-    ANDROID_BUILD_TOOLS_VERSION=23.0.3 \
-    ANDROID_API_LEVELS=android-23
+# Download and untar Android SDK tools
+RUN mkdir -p /usr/local/android-sdk-linux
+RUN wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip -O tools.zip
+RUN unzip tools.zip -d /usr/local/android-sdk-linux
+RUN rm tools.zip
 
-RUN cd /opt && \
-    wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz && \
-    tar xzf android-sdk.tgz && \
-    rm -f android-sdk.tgz && \
-    chown -R root.root android-sdk-linux
+# Set environment variable
+ENV ANDROID_HOME /usr/local/android-sdk-linux
+ENV PATH ${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$PATH
 
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+RUN mkdir $ANDROID_HOME/licenses
+RUN echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > $ANDROID_HOME/licenses/android-sdk-license
+RUN echo d56f5187479451eabf01fb78af6dfcb131a6481e >> $ANDROID_HOME/licenses/android-sdk-license
+RUN echo 84831b9409646a918e30573bab4c9c91346d8abd > $ANDROID_HOME/licenses/android-sdk-preview-license
 
-
-RUN echo y | android update sdk --no-ui -a --filter tools,platform-tools,${ANDROID_API_LEVELS},build-tools-${ANDROID_BUILD_TOOLS_VERSION},extra-android-support,extra-android-m2repository,extra-google-m2repository
+# Update and install using sdkmanager 
+RUN $ANDROID_HOME/tools/bin/sdkmanager "tools" "platform-tools"
+RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;26.0.2" "build-tools;25.0.3"
+RUN $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-26" "platforms;android-25" "platforms;android-24" "platforms;android-23"
+RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository"
+RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+RUN $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+Source Repository
+  chibatching/docker-android-sdk
