@@ -4,7 +4,7 @@ FROM ubuntu:14.04
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     apt-get install -y openjdk-8-jdk && \
-    apt-get install -y openjdk-7-jdk && \
+    apt-get install -y openjdk-7-jdk
 
 # Install Deps
 RUN dpkg --add-architecture i386 && \
