@@ -15,10 +15,9 @@ class NotNullSingleValueVar<T>{
 
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T){
         this.value = if(this.value == null){
-            value
-        }else{
-            throw IllegalStateException("${property.name} already init")
-        }
-
+                        value
+                     } else{
+                        throw IllegalStateException("${property.name} already init")
+                    }
     }
 }
