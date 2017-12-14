@@ -12,12 +12,12 @@ import java.util.*
                                  val thetvdb_id : Long)*/
 // TODO inheritance forthe parameter from database sere
 // cause of ormlite the property shoulb be var ans nullable
-@DatabaseTable(tableName = "listShows")
+@DatabaseTable(tableName = "shows")
 data class Shows(
         @DatabaseField(generatedId=true)
         var id : Int? = null,
         @SerializedName("shows")
-        @ForeignCollectionField(eager = true)
+        @ForeignCollectionField(eager = true, columnName = "series")
         var listShow : Collection<Serie>? = null){
     val size: Int
         get() = listShow!!.size
@@ -31,73 +31,90 @@ data class Shows(
         }
     }
 
+
+
     operator fun iterator(): Iterator<Serie> = listShow!!.iterator()
+    override fun toString(): String {
+
+        return "Shows(id=$id, listShow="+listShow!!.take(0)
+    }
 
 }
 
 @DatabaseTable(tableName = "series")
 data class Serie(
-        @DatabaseField(generatedId=false)
-        val id : Long,
+        @DatabaseField(generatedId=false, id = true)
+        var id : Long? = null,
+        @DatabaseField(foreign = true,   foreignAutoCreate = true)
+        var shows : Shows? = null,
         @DatabaseField(columnName = "idTheTvDb", canBeNull=true)
-        val thetvdb_id : Long,
+        var thetvdb_id : Long? = null,
         @DatabaseField(columnName = "idimDb", canBeNull=true)
-        val imdb_id : String,
+        var imdb_id : String = "",
         @DatabaseField(columnName = "title", canBeNull=true)
-        val title: String,
+        var title: String = "",
         @DatabaseField(columnName = "remaining", canBeNull=true)
-        val remaining : Int,
+        var remaining : Int? = null,
         @SerializedName("unseen")
         @ForeignCollectionField(eager = true)
-        val episode : List<Episode>)
+        var episode : Collection<Episode>? = null)
     : AnkoLogger {
-    operator fun get(position: Int) : Episode = episode[position]
+    operator fun get(position: Int) : Episode {
+        if (episode is List && episode != null) {
+                return (episode as List<Episode>) [position]
+        }
+        else{
+            throw  ClassCastException()
+        }
+    }
 
     fun first(): Episode {
-        if(episode.isNotEmpty()){
+        if(episode!!.isNotEmpty()){
             /// TODO better exception
             info{"Empty episode..."}
             //return null;
         }
-        return episode[0]
+        return return (episode as List<Episode>)[0]
 
     }
 }
 
 @DatabaseTable(tableName = "episodes")
 data class Episode(
-        @DatabaseField(generatedId=false)
-        val id : Int ,
+        @DatabaseField(generatedId=false, id = true)
+        var id : Int? = null ,
+        @DatabaseField(foreign = true)
+        var serie : Serie? = null,
         @DatabaseField(columnName = "season", canBeNull=true)
-        val season : Int,
+        var season : Int? = null,
         @DatabaseField(columnName = "episode", canBeNull=true)
-        val episode : Int,
+        var episode : Int? = null,
         @DatabaseField(columnName = "description", canBeNull=true)
-        val description : String,
+        var description : String = "",
         @DatabaseField(columnName = "date", canBeNull=true)
-        val date : Date,
+        var date : Date? = null,
         @DatabaseField(foreign = true)
-        val user : UserSerieInfo,
+        var user : UserSerieInfo? = null,
         @DatabaseField(columnName = "resourceURL", canBeNull=true)
-        val resource_url : String?,
+        var resource_url : String? = "",
         @DatabaseField
-        val title : String,
+        var title : String = "",
         @DatabaseField(foreign = true)
-        @SerializedName("show") val episodeInfo : Show
+        @SerializedName("show") var episodeInfo : Show? = null
 )
 @DatabaseTable()
 data class UserSerieInfo(
         @DatabaseField(generatedId=true)
-        val id : Long,
+        var id : Long? = null,
         @DatabaseField(columnName = "seen", canBeNull=true)
-        val seen : Boolean,
-        @DatabaseField(columnName = "seen", canBeNull=true)
-        val downloaded : Boolean)
+        var seen : Boolean? = null,
+        @DatabaseField(columnName = "downloaded", canBeNull=true)
+        var downloaded : Boolean? = null)
 @DatabaseTable()
 data class Show(
-        @DatabaseField(generatedId=false)
-        val id : Long,
+        @DatabaseField(generatedId=false,  columnName = "ID", id = true)
+        var id : Long? = null,
         @DatabaseField(columnName = "theTvDbID", canBeNull=true)
-        val thevdb_Id : Long,
+        var thevdb_Id : Long? = null,
         @DatabaseField(columnName = "title", canBeNull=true)
-        val title : String)
+        var title : String = "")

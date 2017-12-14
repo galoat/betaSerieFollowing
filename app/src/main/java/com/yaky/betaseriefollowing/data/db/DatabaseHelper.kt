@@ -5,13 +5,16 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
+import com.yaky.betaseriefollowing.data.Episode
+import com.yaky.betaseriefollowing.data.Serie
 import com.yaky.betaseriefollowing.data.Show
 import com.yaky.betaseriefollowing.data.Shows
+import com.yaky.betaseriefollowing.data.UserSerieInfo
 import com.yaky.betaseriefollowing.ui.App
 
 
 //TODO App.instance should be passed as parameter to be mocked for test
-object  DatabaseHelper: OrmLiteSqliteOpenHelper(App.instance, "nameDb", null, 1 ) {
+object  DatabaseHelper: OrmLiteSqliteOpenHelper(App.instance, "nameDb", null, 4) {
 
 
     override fun onCreate(db: SQLiteDatabase?, connectionSource: ConnectionSource?) {
