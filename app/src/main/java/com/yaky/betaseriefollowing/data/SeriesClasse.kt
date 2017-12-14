@@ -10,7 +10,7 @@ import java.util.*
 
 /*abstract class DataFromBetaSerie(val id: Long,
                                  val thetvdb_id : Long)*/
-// TODO inheritance forthe parameter from database sere
+// TODO inheritance forthe paramegit push --set-upstream origin banana_peeler;ter from database sere
 // cause of ormlite the property shoulb be var ans nullable
 @DatabaseTable(tableName = "shows")
 data class Shows(
