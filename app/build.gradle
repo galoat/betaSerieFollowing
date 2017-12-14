@@ -4,7 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: "kotlin-android-extensions"
+
+apply plugin: "kotlin-jpa"
 
 android {
     compileSdkVersion 25
@@ -42,5 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.j256.ormlite:ormlite-android:4.48'
+
 
 }

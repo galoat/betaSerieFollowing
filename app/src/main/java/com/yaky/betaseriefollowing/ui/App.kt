@@ -4,12 +4,12 @@ import android.app.Application
 
 
 class App : Application(){
+
     companion object {
-        var instance : App by DelegateExt.notNullSingleValue()
+        lateinit var instance: App
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    init {
         instance = this
     }
 }

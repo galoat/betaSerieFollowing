@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.Shows
+import com.yaky.betaseriefollowing.data.db.DatabaseHelper
+import com.yaky.betaseriefollowing.data.db.ShowsDao
 import com.yaky.betaseriefollowing.domain.request.RequestToBetaSerie
 import com.yaky.betaseriefollowing.ui.adapter.SerieListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,12 +31,21 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 uiThread {
                     listSeries.adapter = SerieListAdapter(result)
                 }
+                val dao : ShowsDao = ShowsDao()
+                dao.add(result)
+                val result = dao.queryForAll()
+                info(result)
             }
             else{
                 //TODO endel the case when  the resykt isnull
                 info{"Result null"}
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DatabaseHelper.close()
     }
 }
 
