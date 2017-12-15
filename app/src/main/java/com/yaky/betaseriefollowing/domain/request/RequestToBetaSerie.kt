@@ -2,8 +2,7 @@ package com.yaky.betaseriefollowing.domain.request
 
 
 import com.google.gson.Gson
-import com.yaky.betaseriefollowing.data.Serie
-import com.yaky.betaseriefollowing.data.Shows
+import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.domain.Command
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -42,9 +41,6 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
             info{"can't deserialize"}
             return null
         }else {
-            for (item: Serie in listShows) {
-
-            }
             return listShows
         }
     }

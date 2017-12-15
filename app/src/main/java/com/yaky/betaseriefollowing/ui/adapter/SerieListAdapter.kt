@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yaky.betaseriefollowing.R
-import com.yaky.betaseriefollowing.data.Serie
-import com.yaky.betaseriefollowing.data.Shows
+import com.yaky.betaseriefollowing.data.classes.Serie
+import com.yaky.betaseriefollowing.data.classes.Shows
+
 import kotlinx.android.synthetic.main.item_serie.view.*
 
 class SerieListAdapter(val items: Shows) : RecyclerView.Adapter<SerieListAdapter.ViewHolder>() {
@@ -17,10 +18,10 @@ class SerieListAdapter(val items: Shows) : RecyclerView.Adapter<SerieListAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-          holder.bindSerie(items[position])
+          holder.bindSerie(items.listShow[position])
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = items.size()
 
     class ViewHolder(val view: View): RecyclerView.ViewHolder(view){
       //  private val iconView : ImageView = view.find(R.id.icon)
