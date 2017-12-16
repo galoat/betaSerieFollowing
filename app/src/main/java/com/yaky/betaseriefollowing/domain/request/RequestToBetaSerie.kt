@@ -25,8 +25,8 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         //TODO parameter shouldn't be hard coded
         info{"requestListSerie request"}
         val request = Request.Builder().url(urlListSerie)
-                .addHeader("X-BetaSeries-Key","76e51c0d8c9c" )
-                .addHeader("Authorization","Bearer c25f78a3e191" )
+                .addHeader("X-BetaSeries-Key","f88333cc0209" )
+                .addHeader("Authorization","Bearer 2a2ca041c5a0" )
                 .addHeader("Accept"," application/json")
                 .build()
 
