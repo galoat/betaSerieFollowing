@@ -1,7 +1,10 @@
 package com.yaky.betaseriefollowing.data.classes;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.util.Date;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -10,7 +13,8 @@ import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.DaoException;
 
 @Entity
-public class Episode {
+public class Episode implements Parcelable {
+
   @Id
   private int id;
   private String title;
@@ -231,10 +235,55 @@ public class Episode {
       myDao.update(this);
   }
 
-  /** called by internal mechanisms, do not call yourself. */
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.id);
+    dest.writeString(this.title);
+    dest.writeValue(this.serieId);
+    dest.writeInt(this.season);
+    dest.writeInt(this.episode);
+    dest.writeString(this.description);
+    dest.writeLong(this.date != null ? this.date.getTime() : -1);
+    dest.writeParcelable(this.user, flags);
+    dest.writeString(this.resource_url);
+    dest.writeParcelable(this.episodeInfo, flags);
+  }
+
+/** called by internal mechanisms, do not call yourself. */
 @Generated(hash = 153634245)
 public void __setDaoSession(DaoSession daoSession) {
     this.daoSession = daoSession;
     myDao = daoSession != null ? daoSession.getEpisodeDao() : null;
 }
+
+protected Episode(Parcel in) {
+    this.id = in.readInt();
+    this.title = in.readString();
+    this.serieId = (Long) in.readValue(Long.class.getClassLoader());
+    this.season = in.readInt();
+    this.episode = in.readInt();
+    this.description = in.readString();
+    long tmpDate = in.readLong();
+    this.date = tmpDate == -1 ? null : new Date(tmpDate);
+    this.user = in.readParcelable(UserSerieInfo.class.getClassLoader());
+    this.resource_url = in.readString();
+    this.episodeInfo = in.readParcelable(Show.class.getClassLoader());
+  }
+
+  public static final Creator<Episode> CREATOR = new Creator<Episode>() {
+    @Override
+    public Episode createFromParcel(Parcel source) {
+      return new Episode(source);
+    }
+
+    @Override
+    public Episode[] newArray(int size) {
+      return new Episode[size];
+    }
+  };
 }
