@@ -2,7 +2,6 @@ package com.yaky.betaseriefollowing.ui.activities
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.classes.Episode
 import com.yaky.betaseriefollowing.ui.fragments.MoreSerieFragment
@@ -10,7 +9,7 @@ import com.yaky.betaseriefollowing.ui.fragments.listSeries.ListSerieFragment
 import com.yaky.betaseriefollowing.ui.fragments.listSeries.OnEpisodeSelected
 import org.jetbrains.anko.AnkoLogger
 
-class MainActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
+class ListActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
     override fun onEpisodeSelected(episode: Episode) {
         val detailsFragment = MoreSerieFragment.newInstance(episode)
 
