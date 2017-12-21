@@ -52,7 +52,7 @@
         <LinearLayout
           android:layout_width="281dp"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/spacing_xlarge"
+          android:layout_marginLeft="@dimen/spacing_medium"
           android:layout_marginRight="@dimen/spacing_xlarge"
           android:orientation="horizontal">
           <TextView
