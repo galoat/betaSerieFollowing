@@ -31,13 +31,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnEpisodeSelected {
 
     }
 
-
-/*
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-    }*/
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

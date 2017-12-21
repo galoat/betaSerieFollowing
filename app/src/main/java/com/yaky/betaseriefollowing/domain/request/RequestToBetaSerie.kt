@@ -1,9 +1,10 @@
 package com.yaky.betaseriefollowing.domain.request
 
-
 import com.google.gson.Gson
+import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.domain.Command
+import com.yaky.betaseriefollowing.ui.App
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jetbrains.anko.AnkoLogger
@@ -25,7 +26,7 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         //TODO parameter shouldn't be hard coded
         info{"requestListSerie request"}
         val request = Request.Builder().url(urlListSerie)
-                .addHeader("X-BetaSeries-Key","f88333cc0209" )
+                .addHeader("X-BetaSeries-Key",  App.instance.getString(R.string.betaKey))
                 .addHeader("Authorization","Bearer 2a2ca041c5a0" )
                 .addHeader("Accept"," application/json")
                 .build()
