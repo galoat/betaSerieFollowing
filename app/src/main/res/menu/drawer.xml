@@ -4,11 +4,11 @@
     <group
       android:checkableBehavior="single">
       <item
-        android:id="@+id/drawer_home"
+        android:id="@+id/login"
         android:checked="true"
         android:title="@string/login"/>
       <item
-        android:id="@+id/drawer_favourite"
+        android:id="@+id/listSeries"
         android:title="@string/listSerie"/>
     </group>
   </menu>
