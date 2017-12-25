@@ -9,7 +9,7 @@ import com.yaky.betaseriefollowing.ui.fragments.listSeries.ListSerieFragment
 import com.yaky.betaseriefollowing.ui.fragments.listSeries.OnEpisodeSelected
 import org.jetbrains.anko.AnkoLogger
 
-class ListActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
+class ListSeriesActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
     override fun onEpisodeSelected(episode: Episode) {
         val detailsFragment = MoreSerieFragment.newInstance(episode)
 
@@ -31,10 +31,8 @@ class ListActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()

@@ -1,6 +1,19 @@
 <resources>
   <string name="app_name">betaSerieFollowing</string>
-  <string name="login">login</string>
+
+ <!-- MENU -->
   <string name="listSerie">list series</string>
+  <string name="login">login</string>
+
+<!-- Layout Login -->
+  <string name="LoginLogin">login</string>
+  <string name="LoginUser">User</string>
+  <string name="LoginUserHint">User</string>
+  <string name="LoginPassword">Password</string>
+  <string name="LoginPasswordHint">Password</string>
+
+
+<!-- Param Request Beta Key -->
   <string name="betaKey">f88333cc0209</string>
+  <string name="betaSerieURL">https://api.betaseries.com/episodes/list?v=3.0</string>
 </resources>

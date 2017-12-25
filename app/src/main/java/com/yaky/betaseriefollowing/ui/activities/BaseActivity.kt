@@ -1,6 +1,7 @@
 package com.yaky.betaseriefollowing.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -10,7 +11,8 @@ import android.view.ViewGroup
 import com.yaky.betaseriefollowing.R
 import kotlinx.android.synthetic.main.base_layout.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
+
+
 
 
 abstract class BaseActivity : AppCompatActivity(),  MenuItem.OnMenuItemClickListener, AnkoLogger {
@@ -54,16 +56,11 @@ abstract class BaseActivity : AppCompatActivity(),  MenuItem.OnMenuItemClickList
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.getItemId()) {
             R.id.login -> {
-                info{
-                    "login"
-                }
+                startActivity(Intent(this, LoginActivity::class.java))
             }
             R.id.listSeries -> {
-                info{
-                    "list series"
-                }
+                startActivity(Intent(this, ListSeriesActivity::class.java))
             }
-
         }
         return false
     }

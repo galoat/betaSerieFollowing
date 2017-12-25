@@ -16,7 +16,7 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
     private val client = OkHttpClient()
 
     companion object {
-        private val urlListSerie = "https://api.betaseries.com/episodes/list?v=3.0"
+        private val urlListSerie = App.instance.getString(R.string.betaSerieURL)
         private val image = "https://api.betaseries.com/episodes/list?v=3.0"
     }
 
@@ -32,7 +32,7 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
                 .build()
 
         val response = client.newCall(request).execute()
-        if (!response.isSuccessful()) {
+        if (!response.isSuccessful) {
             throw IOException("Unexpected code " + response)
         }
         info("response OK from server ")
