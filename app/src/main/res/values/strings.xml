@@ -13,6 +13,12 @@
   <string name="LoginPasswordHint">Password</string>
 
 
+
+
+  <!-- Error for toast -->
+  <string name="ParsingException">Parsing error : Can\'t load new item</string>
+  <string name="ConnectionException">Connection error : Can\'t load new item</string>
+
 <!-- Param Request Beta Key -->
   <string name="betaKey">f88333cc0209</string>
   <string name="betaSerieURL">https://api.betaseries.com/episodes/list?v=3.0</string>

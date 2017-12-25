@@ -1,5 +1,7 @@
 package com.yaky.betaseriefollowing.data.classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 @Entity
-public class User {
+public class User implements Parcelable{
   @Id
   private Long id;
   private String login;
@@ -59,4 +61,33 @@ public class User {
   }
 
 
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeValue(this.id);
+    dest.writeString(this.login);
+    dest.writeString(this.password);
+  }
+
+  protected User(Parcel in) {
+    this.id = (Long) in.readValue(Long.class.getClassLoader());
+    this.login = in.readString();
+    this.password = in.readString();
+  }
+
+  public static final Creator<User> CREATOR = new Creator<User>() {
+    @Override
+    public User createFromParcel(Parcel source) {
+      return new User(source);
+    }
+
+    @Override
+    public User[] newArray(int size) {
+      return new User[size];
+    }
+  };
 }

@@ -14,11 +14,9 @@ import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.domain.request.RequestToBetaSerie
 import com.yaky.betaseriefollowing.ui.App
 import com.yaky.betaseriefollowing.ui.fragments.listSeries.adapter.SerieListAdapter
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.info
-import org.jetbrains.anko.uiThread
-
+import org.jetbrains.anko.*
+import org.json.JSONException
+import java.io.IOException
 
 class ListSerieFragment : Fragment(), AnkoLogger {
 
@@ -48,19 +46,44 @@ class ListSerieFragment : Fragment(), AnkoLogger {
         val listSeries = view.findViewById(R.id.listSeries_recycleView) as RecyclerView
         listSeries.layoutManager = LinearLayoutManager(activity)
         doAsync {
-            val result : Shows? = RequestToBetaSerie().requestListSerie()
-            if(result != null) {
-                //info{result.listShow[0]}
-                uiThread {
-                    listSeries.adapter = SerieListAdapter(result, listener)
-                }
+            var result : Shows? = null
+            try {
+                result = RequestToBetaSerie().requestListSerie()
+                App.daoSession.showsDao.deleteAll()
                 App.daoSession.showsDao.save(result)
                 val test = App.daoSession.showsDao.loadAll()
                 info{test}
             }
-            else{
-                //TODO endel the case when  the result is null
-                info{"Result null"}
+            catch (e:Exception){
+                info("catch exception")
+                when(e){
+                    is JSONException -> {
+                        uiThread {
+                            context.toast(App.instance.getString(R.string.ParsingException))
+                        }
+                    }
+                    is IOException -> {
+                        uiThread {
+                            context.toast(App.instance.getString(R.string.ConnectionException))
+                        }
+                    }
+                }
+                //TODO : use user ID to get the correct Shows
+                val test = App.daoSession.showsDao.loadAll()
+                if(test != null){
+                    result = test.get(0)
+                    warn{result}
+                }
+
+            }
+            finally{
+                uiThread {
+                    if(result != null) {
+                        listSeries.adapter = SerieListAdapter(result!!, listener)
+                    }else{
+                        warn { "result is null " }
+                    }
+                }
             }
         }
         return view

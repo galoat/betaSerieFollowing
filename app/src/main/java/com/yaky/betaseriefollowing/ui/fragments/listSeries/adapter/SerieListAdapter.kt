@@ -10,7 +10,7 @@ import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.ui.fragments.listSeries.OnEpisodeSelected
 
 import kotlinx.android.synthetic.main.item_serie.view.*
-
+///TODO handle if a show is null
 class SerieListAdapter(val items: Shows,val listener: OnEpisodeSelected) : RecyclerView.Adapter<SerieListAdapter.ViewHolder>() {
 
 
