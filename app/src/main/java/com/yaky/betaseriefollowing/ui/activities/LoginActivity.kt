@@ -19,8 +19,8 @@ class LoginActivity: BaseActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         validate.setOnClickListener {
-            val password =  password.editText?.text.toString()
-            val user = login.editText?.text.toString()
+            val password =  password.text.toString()
+            val user = login.text.toString()
             if(user == "" || password == ""){
                 toast(App.instance.getString(R.string.LoginInputError))
             }
@@ -47,7 +47,5 @@ class LoginActivity: BaseActivity(), AnkoLogger {
                 }
             }
         }
-
-
     }
 }

@@ -23,7 +23,7 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
 
 
     private val client = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .build()
@@ -66,6 +66,7 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         val request = requestBuilder.addHeader("X-BetaSeries-Key",  App.instance.getString(R.string.betaKey) )
                 .url(urlListSerie + requestUrl)
                 .build()
+        info{"test"}
         val response = client.newCall(request).execute()
         if (!response.isSuccessful) {
             warn("problem connection server \n error :"+  response.body()?.string())

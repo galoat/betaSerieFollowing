@@ -6,18 +6,16 @@
   <string name="login">login</string>
 
 <!-- Layout Login -->
-  <string name="LoginLogin">login</string>
+
   <string name="LoginUser">User</string>
-  <string name="LoginUserHint">User</string>
   <string name="LoginPassword">Password</string>
-  <string name="LoginPasswordHint">Password</string>
-  <string name="LoginOK">Validate</string>
+  <string name="LoginOK">Login</string>
 
 
 
   <!-- Error for toast -->
   <string name="ParsingException">Parsing error : Can\'t load new item</string>
-  <string name="ConnectionException">Connection error : Can\'t load new item</string>
+  <string name="ConnectionException">Connection error : Can\'t connect to server</string>
   <string name="LoginInputError">Can\'t use the credential (maybe empty ?)</string>
   <string name="LoginWrongCredential">WrongCredential</string>
 

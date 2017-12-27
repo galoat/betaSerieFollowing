@@ -55,7 +55,6 @@ class ListSerieFragment : Fragment(), AnkoLogger {
                 info{test}
             }
             catch (e:Exception){
-                info("catch exception")
                 when(e){
                     is JSONException -> {
                         uiThread {
@@ -78,7 +77,7 @@ class ListSerieFragment : Fragment(), AnkoLogger {
             }
             finally{
                 uiThread {
-                    if(result != null) {
+                    if(result?.listShow != null) {
                         listSeries.adapter = SerieListAdapter(result!!, listener)
                     }else{
                         warn { "result is null " }

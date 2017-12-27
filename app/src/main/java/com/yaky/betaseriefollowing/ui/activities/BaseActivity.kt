@@ -30,7 +30,7 @@ abstract class BaseActivity : AppCompatActivity(),  MenuItem.OnMenuItemClickList
                     ViewGroup.LayoutParams.MATCH_PARENT)
             val stubView = inflater.inflate(layoutResID, view_stub, false)
             view_stub.addView(stubView, lp)
-            val drawerMenu = navigation_view.getMenu()
+            val drawerMenu = navigation_view.menu
             for (i in 0 until drawerMenu.size()) {
                 drawerMenu.getItem(i).setOnMenuItemClickListener(this)
             }
@@ -54,11 +54,12 @@ abstract class BaseActivity : AppCompatActivity(),  MenuItem.OnMenuItemClickList
 
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.login -> {
+        item.isChecked = true
+        when (item.itemId) {
+            R.id.menuLogin -> {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
-            R.id.listSeries -> {
+            R.id.menuListSeries -> {
                 startActivity(Intent(this, ListSeriesActivity::class.java))
             }
         }

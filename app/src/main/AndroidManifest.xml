@@ -11,8 +11,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.yaky.betaseriefollowing.ui.activities.LoginActivity"
-      android:windowSoftInputMode="stateHidden|adjustResize">
+    <activity android:name="com.yaky.betaseriefollowing.ui.activities.LoginActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
