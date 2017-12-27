@@ -11,15 +11,19 @@
   <string name="LoginUserHint">User</string>
   <string name="LoginPassword">Password</string>
   <string name="LoginPasswordHint">Password</string>
-
+  <string name="LoginOK">Validate</string>
 
 
 
   <!-- Error for toast -->
   <string name="ParsingException">Parsing error : Can\'t load new item</string>
   <string name="ConnectionException">Connection error : Can\'t load new item</string>
+  <string name="LoginInputError">Can\'t use the credential (maybe empty ?)</string>
+  <string name="LoginWrongCredential">WrongCredential</string>
 
 <!-- Param Request Beta Key -->
   <string name="betaKey">f88333cc0209</string>
-  <string name="betaSerieURL">https://api.betaseries.com/episodes/list?v=3.0</string>
+  <string name="betaSerieURL">https://api.betaseries.com/</string>
+  <string name="betaSerieURLEpisodeList">episodes/list?v=3.0</string>
+  <string name="betaSerieURLHttpsLogin">members/auth</string>
 </resources>

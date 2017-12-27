@@ -8,6 +8,8 @@ import java.security.NoSuchAlgorithmException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
 @Entity
 public class User implements Parcelable{
@@ -15,12 +17,21 @@ public class User implements Parcelable{
   private Long id;
   private String login;
   private String password;
+  @ToOne
+  private Shows shows;
+
   @Generated(hash = 895792858)
   public User(Long id, String login, String password) {
       this.id = id;
       this.login = login;
       this.password = password;
   }
+
+  public User(String login, String password) {
+    this.login = login;
+    this.password = convertPassMd5(password);
+  }
+
   @Generated(hash = 586692638)
   public User() {
   }
@@ -72,8 +83,73 @@ public class User implements Parcelable{
     dest.writeString(this.login);
     dest.writeString(this.password);
   }
+  /** To-one relationship, resolved on first access. */
+  @Generated(hash = 229653216)
+  public Shows getShows() {
+      if (shows != null || !shows__refreshed) {
+          if (daoSession == null) {
+              throw new DaoException("Entity is detached from DAO context");
+          }
+          ShowsDao targetDao = daoSession.getShowsDao();
+          targetDao.refresh(shows);
+          shows__refreshed = true;
+      }
+      return shows;
+  }
+  /** To-one relationship, returned entity is not refreshed and may carry only the PK property. */
+  @Generated(hash = 901089533)
+  public Shows peakShows() {
+      return shows;
+  }
+  /** called by internal mechanisms, do not call yourself. */
+  @Generated(hash = 828183882)
+  public void setShows(Shows shows) {
+      synchronized (this) {
+          this.shows = shows;
+          shows__refreshed = true;
+      }
+  }
+  /**
+   * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+   * Entity must attached to an entity context.
+   */
+  @Generated(hash = 128553479)
+  public void delete() {
+      if (myDao == null) {
+          throw new DaoException("Entity is detached from DAO context");
+      }
+      myDao.delete(this);
+  }
+  /**
+   * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+   * Entity must attached to an entity context.
+   */
+  @Generated(hash = 1942392019)
+  public void refresh() {
+      if (myDao == null) {
+          throw new DaoException("Entity is detached from DAO context");
+      }
+      myDao.refresh(this);
+  }
+  /**
+   * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+   * Entity must attached to an entity context.
+   */
+  @Generated(hash = 713229351)
+  public void update() {
+      if (myDao == null) {
+          throw new DaoException("Entity is detached from DAO context");
+      }
+      myDao.update(this);
+  }
+  /** called by internal mechanisms, do not call yourself. */
+@Generated(hash = 2059241980)
+public void __setDaoSession(DaoSession daoSession) {
+    this.daoSession = daoSession;
+    myDao = daoSession != null ? daoSession.getUserDao() : null;
+}
 
-  protected User(Parcel in) {
+protected User(Parcel in) {
     this.id = (Long) in.readValue(Long.class.getClassLoader());
     this.login = in.readString();
     this.password = in.readString();
@@ -90,4 +166,12 @@ public class User implements Parcelable{
       return new User[size];
     }
   };
+  /** Used to resolve relations */
+  @Generated(hash = 2040040024)
+  private transient DaoSession daoSession;
+  /** Used for active entity operations. */
+  @Generated(hash = 1507654846)
+  private transient UserDao myDao;
+  @Generated(hash = 756019410)
+  private transient boolean shows__refreshed;
 }

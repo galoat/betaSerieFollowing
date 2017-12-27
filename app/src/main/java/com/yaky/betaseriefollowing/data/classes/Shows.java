@@ -1,7 +1,10 @@
 package com.yaky.betaseriefollowing.data.classes;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -10,7 +13,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
 @Entity
-public class Shows {
+public class Shows implements Parcelable{
   @Id
   private Long id;
   @SerializedName("shows")
@@ -117,10 +120,39 @@ public class Shows {
       myDao.update(this);
   }
 
-  /** called by internal mechanisms, do not call yourself. */
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeValue(this.id);
+    dest.writeList(this.listShow);
+  }
+
+/** called by internal mechanisms, do not call yourself. */
 @Generated(hash = 993163379)
 public void __setDaoSession(DaoSession daoSession) {
     this.daoSession = daoSession;
     myDao = daoSession != null ? daoSession.getShowsDao() : null;
 }
+
+protected Shows(Parcel in) {
+    this.id = (Long) in.readValue(Long.class.getClassLoader());
+    this.listShow = new ArrayList<Serie>();
+    in.readList(this.listShow, Serie.class.getClassLoader());
+  }
+
+  public static final Creator<Shows> CREATOR = new Creator<Shows>() {
+    @Override
+    public Shows createFromParcel(Parcel source) {
+      return new Shows(source);
+    }
+
+    @Override
+    public Shows[] newArray(int size) {
+      return new Shows[size];
+    }
+  };
 }
