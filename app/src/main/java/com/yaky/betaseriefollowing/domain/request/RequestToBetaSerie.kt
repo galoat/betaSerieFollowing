@@ -57,7 +57,6 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
                 .build()
         val request = Request.Builder().post(formBody)
         val credential =sendRequest(request, App.instance.getString(R.string.betaSerieURLHttpsLogin))
-        info{"token : "+credential}
         return credential ?: throw CredentialException("Can't identificate User")
     }
 
@@ -66,7 +65,6 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         val request = requestBuilder.addHeader("X-BetaSeries-Key",  App.instance.getString(R.string.betaKey) )
                 .url(urlListSerie + requestUrl)
                 .build()
-        info{"test"}
         val response = client.newCall(request).execute()
         if (!response.isSuccessful) {
             warn("problem connection server \n error :"+  response.body()?.string())

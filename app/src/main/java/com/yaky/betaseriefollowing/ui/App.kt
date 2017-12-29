@@ -3,6 +3,7 @@ package com.yaky.betaseriefollowing.ui
 import android.app.Application
 import com.yaky.betaseriefollowing.data.classes.DaoMaster
 import com.yaky.betaseriefollowing.data.classes.DaoSession
+import com.yaky.betaseriefollowing.ui.UtilsFunction.DelegateExt
 
 
 class App( ) : Application(){

@@ -1,4 +1,4 @@
-package com.yaky.betaseriefollowing.ui
+package com.yaky.betaseriefollowing.ui.UtilsFunction
 
 import kotlin.reflect.KProperty
 

@@ -18,6 +18,7 @@
   <string name="ConnectionException">Connection error : Can\'t connect to server</string>
   <string name="LoginInputError">Can\'t use the credential (maybe empty ?)</string>
   <string name="LoginWrongCredential">WrongCredential</string>
+  <string name="LoginNullPointerServer">Null pointer from server</string>
 
 <!-- Param Request Beta Key -->
   <string name="betaKey">f88333cc0209</string>

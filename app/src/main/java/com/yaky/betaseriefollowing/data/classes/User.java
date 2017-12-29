@@ -10,6 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity
 public class User implements Parcelable{
@@ -17,6 +18,8 @@ public class User implements Parcelable{
   private Long id;
   private String login;
   private String password;
+  @Transient
+  private String token;
   @ToOne
   private Shows shows;
 
@@ -30,6 +33,10 @@ public class User implements Parcelable{
   public User(String login, String password) {
     this.login = login;
     this.password = convertPassMd5(password);
+  }
+
+  public User(String login) {
+    this.login = login;
   }
 
   @Generated(hash = 586692638)
@@ -142,14 +149,7 @@ public class User implements Parcelable{
       }
       myDao.update(this);
   }
-  /** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 2059241980)
-public void __setDaoSession(DaoSession daoSession) {
-    this.daoSession = daoSession;
-    myDao = daoSession != null ? daoSession.getUserDao() : null;
-}
-
-protected User(Parcel in) {
+  protected User(Parcel in) {
     this.id = (Long) in.readValue(Long.class.getClassLoader());
     this.login = in.readString();
     this.password = in.readString();
@@ -174,4 +174,23 @@ protected User(Parcel in) {
   private transient UserDao myDao;
   @Generated(hash = 756019410)
   private transient boolean shows__refreshed;
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+public void setEncryptedPassword(String password){
+  this.password = password;
+}
+
+/** called by internal mechanisms, do not call yourself. */
+@Generated(hash = 2059241980)
+public void __setDaoSession(DaoSession daoSession) {
+    this.daoSession = daoSession;
+    myDao = daoSession != null ? daoSession.getUserDao() : null;
+}
 }

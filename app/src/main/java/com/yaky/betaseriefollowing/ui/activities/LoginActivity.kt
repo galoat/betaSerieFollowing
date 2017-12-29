@@ -1,51 +1,112 @@
 package com.yaky.betaseriefollowing.ui.activities
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import com.yaky.betaseriefollowing.Exception.CredentialException
 import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.classes.User
 import com.yaky.betaseriefollowing.domain.request.RequestToBetaSerie
 import com.yaky.betaseriefollowing.ui.App
 import kotlinx.android.synthetic.main.login.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.*
+import org.json.JSONObject
 import java.io.IOException
 
-class LoginActivity: BaseActivity(), AnkoLogger {
 
+
+
+
+class LoginActivity: BaseActivity(), AnkoLogger {
+    companion object {
+        private val userNameKeyPrefs: String = "name"
+        private val userPasswordKeyPrefs: String = "password"
+        private val tokenKeyFromApi: String = "token"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
-        validate.setOnClickListener {
-            val password =  password.text.toString()
-            val user = login.text.toString()
-            if(user == "" || password == ""){
-                toast(App.instance.getString(R.string.LoginInputError))
+        ///TODO: beter prefs managment ?
+        val prefs = PreferenceManager.getDefaultSharedPreferences(App.instance)
+        if(prefs.getString(userNameKeyPrefs, "") != "" && prefs.getString(userPasswordKeyPrefs,"") != ""){
+            val user = User(prefs.getString(userNameKeyPrefs, ""))
+            user.setEncryptedPassword( prefs.getString(userPasswordKeyPrefs,""))
+            try{
+                debug{"using prefs for login"}
+                getToken(user,  {token: String ->
+                    run {
+                        user.token = JSONObject(token).getString(tokenKeyFromApi)
+                        info { "token : " + user.token }
+                   //     startActivity(Intent(this, ListSeriesActivity::class.java))
+                    }
+                })
+
+            }catch (e: Exception){
+                when (e) {
+                    is NullPointerException -> {
+                        App.instance.toast(App.instance.getString(R.string.LoginNullPointerServer))
+                    }
+                }
             }
-            else{
-                ///TODO : waiter for user info
-                val user = User(user, password)
-                doAsync {
-                    try {
-                        val response = RequestToBetaSerie().requestCredential(user)
-                    }catch (e : Exception){
-                        when(e){
-                            is CredentialException -> {
-                                uiThread {
-                                    App.instance.toast(App.instance.getString(R.string.LoginWrongCredential))
-                                }
+
+        }
+        else {
+            validate.setOnClickListener {
+                val password = password.text.toString()
+                val user = login.text.toString()
+                if (user == "" || password == "") {
+                    toast(App.instance.getString(R.string.LoginInputError))
+                } else {
+                    ///TODO : waiter for user info
+                    val newUser = User(user, password)
+                    debug{"using input user for login "}
+                    getToken(newUser, {token: String ->
+                        run {
+                            newUser.token = JSONObject(token).getString(tokenKeyFromApi)
+                            info { "token : " + newUser.token }
+                            prefs.edit().apply {
+                                putString(userNameKeyPrefs, newUser.login)
+                                putString(userPasswordKeyPrefs, newUser.password)
+                                apply()
                             }
-                            is IOException -> {
-                                uiThread {
-                                    App.instance.toast(App.instance.getString(R.string.ConnectionException))
-                                }
-                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+
+
+
+
+    private fun getToken(user: User, callback: (m: String) -> Unit)   {
+        doAsync {
+            try {
+                val response = RequestToBetaSerie().requestCredential(user)
+                if(response != "") {
+                    info{"call callback"}
+                    callback(response)
+                }else{
+                    warn{"Response is null => throw null pointer exception"}
+                    throw NullPointerException()
+                }
+            } catch (e: Exception) {
+                when (e) {
+                    is CredentialException -> {
+                        uiThread {
+                            App.instance.toast(App.instance.getString(R.string.LoginWrongCredential))
+                        }
+                    }
+                    is IOException -> {
+                        uiThread {
+                            App.instance.toast(App.instance.getString(R.string.ConnectionException))
                         }
                     }
                 }
             }
+
         }
+
+
     }
 }
