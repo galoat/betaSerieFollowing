@@ -37,6 +37,7 @@ class LoginActivity: BaseActivity(), MenuItem.OnMenuItemClickListener, AnkoLogge
             val user = User(prefs.getString(userNameKeyPrefs, ""))
             user.setEncryptedPassword( prefs.getString(userPasswordKeyPrefs,""))
             try{
+                login.setText(user.login)
                 debug{"using prefs for login"}
                 getToken(user,  {token: String ->
                     run {
