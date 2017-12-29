@@ -83,7 +83,7 @@ class LoginActivity: BaseActivity(), MenuItem.OnMenuItemClickListener, AnkoLogge
         }
     }
 
-    override  fun specificHandleMenuClick(item: MenuItem): Boolean {
+    override  fun onMenuItemClick(item: MenuItem): Boolean {
         debug { "onMenuItemClick overriden : => send user"}
         item.isChecked = true
         when (item.itemId) {
