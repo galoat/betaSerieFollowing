@@ -51,16 +51,22 @@ abstract class BaseActivity : AppCompatActivity(),  MenuItem.OnMenuItemClickList
             view_stub.addView(view, params)
         }
     }
-
+     open protected fun specificHandleMenuClick(item: MenuItem): Boolean {
+        return false
+     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         item.isChecked = true
-        when (item.itemId) {
-            R.id.menuLogin -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
-            R.id.menuListSeries -> {
-                startActivity(Intent(this, ListSeriesActivity::class.java))
+        if(!specificHandleMenuClick(item)) {
+            when (item.itemId) {
+                R.id.menuLogin -> {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    return true
+                }
+                R.id.menuListSeries -> {
+                    startActivity(Intent(this, ListSeriesActivity::class.java))
+                    return true
+                }
             }
         }
         return false

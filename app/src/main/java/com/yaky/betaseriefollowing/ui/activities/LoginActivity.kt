@@ -1,7 +1,9 @@
 package com.yaky.betaseriefollowing.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.MenuItem
 import com.yaky.betaseriefollowing.Exception.CredentialException
 import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.classes.User
@@ -16,11 +18,15 @@ import java.io.IOException
 
 
 
-class LoginActivity: BaseActivity(), AnkoLogger {
+class LoginActivity: BaseActivity(), MenuItem.OnMenuItemClickListener, AnkoLogger {
+     var user: User? = null
+    ///TODO: class containin all the key
     companion object {
         private val userNameKeyPrefs: String = "name"
         private val userPasswordKeyPrefs: String = "password"
         private val tokenKeyFromApi: String = "token"
+        private val bundleKeyUser: String = "user"
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +42,7 @@ class LoginActivity: BaseActivity(), AnkoLogger {
                     run {
                         user.token = JSONObject(token).getString(tokenKeyFromApi)
                         info { "token : " + user.token }
+                        this.user = user
                    //     startActivity(Intent(this, ListSeriesActivity::class.java))
                     }
                 })
@@ -68,6 +75,7 @@ class LoginActivity: BaseActivity(), AnkoLogger {
                                 putString(userPasswordKeyPrefs, newUser.password)
                                 apply()
                             }
+                            this.user = newUser
                         }
                     })
                 }
@@ -75,7 +83,19 @@ class LoginActivity: BaseActivity(), AnkoLogger {
         }
     }
 
-
+    override  fun specificHandleMenuClick(item: MenuItem): Boolean {
+        debug { "onMenuItemClick overriden : => send user"}
+        item.isChecked = true
+        when (item.itemId) {
+            R.id.menuListSeries -> {
+                val intent = Intent(this, ListSeriesActivity::class.java)
+                intent.putExtra(bundleKeyUser, this.user)
+                startActivity(intent)
+                return true
+            }
+        }
+        return false
+    }
 
 
 
