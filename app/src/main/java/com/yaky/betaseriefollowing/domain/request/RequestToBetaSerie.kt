@@ -33,11 +33,11 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
     }
 
 
-    override fun requestListSerie() : Shows{
+    override fun requestListSerie(token : String) : Shows{
         //TODO parameter shouldn't be hard coded
         info{"requestListSerie request"}
         val request = Request.Builder()
-                .addHeader("Authorization","Bearer 2a2ca041c5a0" )
+                .addHeader("Authorization", token)
                 .addHeader("Accept"," application/json")
             val listShows: Shows? = Gson().fromJson(sendRequest(request, App.instance.getString(R.string.betaSerieURLEpisodeList)), Shows::class.java)
             if(listShows == null){

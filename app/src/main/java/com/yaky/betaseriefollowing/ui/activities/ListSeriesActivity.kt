@@ -34,17 +34,24 @@ class ListSeriesActivity : BaseActivity(), AnkoLogger, OnEpisodeSelected {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var user : User? = null
         if(intent.hasExtra("user")){
-            val user : User = intent.getParcelableExtra("user")
-            info { "intent get user : ${user.login}" }
+            user = intent.getParcelableExtra("user")
         }else{
             info{"No key user send"}
         }
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
+
+            val fragment = ListSerieFragment.newInstance()
+            if(user != null){
+                val bundle = Bundle()
+                bundle.putParcelable("user", user)
+                fragment.arguments = bundle
+            }
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.listFragment, ListSerieFragment.newInstance(), "listSeries")
+                    .add(R.id.listFragment, fragment, "listSeries")
                     .commit()
         }
     }
