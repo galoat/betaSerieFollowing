@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.yaky.betaseriefollowing.Exception.CredentialException
 import com.yaky.betaseriefollowing.R
+import com.yaky.betaseriefollowing.data.classes.Episode
 import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.data.classes.User
 import com.yaky.betaseriefollowing.domain.Command
@@ -32,6 +33,19 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         private val urlListSerie = App.instance.getString(R.string.betaSerieURL)
     }
 
+    override fun postEpisodeSeen(token: String, episode: Episode):Boolean{
+        info{"post Episode seen "+episode.title}
+        val formBody = FormBody.Builder()
+                .add("id", episode.id.toString())
+                .build()
+        var request = Request.Builder().post(formBody)
+                    .addHeader("Authorization", token)
+        val  result = sendRequest(request, App.instance.getString(R.string.betaSerieURLPostSeen))
+        warn { result }
+        return true
+    }
+
+
 
     override fun requestListSerie(token : String) : Shows{
         //TODO parameter shouldn't be hard coded
@@ -39,13 +53,13 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         val request = Request.Builder()
                 .addHeader("Authorization", token)
                 .addHeader("Accept"," application/json")
-            val listShows: Shows? = Gson().fromJson(sendRequest(request, App.instance.getString(R.string.betaSerieURLEpisodeList)), Shows::class.java)
-            if(listShows == null){
+        val listShows: Shows? = Gson().fromJson(sendRequest(request, App.instance.getString(R.string.betaSerieURLEpisodeList)), Shows::class.java)
+        if(listShows == null){
                 warn("deserialization problem ")
                throw JsonSyntaxException("Problem deserialize JSon from server")
-            }else {
+        }else {
                 return listShows
-            }
+        }
     }
 
     ///TODO use Oauth2 and not HTTPS

@@ -25,4 +25,5 @@
   <string name="betaSerieURL">https://api.betaseries.com/</string>
   <string name="betaSerieURLEpisodeList">episodes/list?v=3.0</string>
   <string name="betaSerieURLHttpsLogin">members/auth</string>
+  <string name="betaSerieURLPostSeen">episodes/watched</string>
 </resources>

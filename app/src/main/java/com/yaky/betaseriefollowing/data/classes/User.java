@@ -181,7 +181,7 @@ public void __setDaoSession(DaoSession daoSession) {
     myDao = daoSession != null ? daoSession.getUserDao() : null;
 }
 
-  protected User(Parcel in) {
+protected User(Parcel in) {
     this.id = (Long) in.readValue(Long.class.getClassLoader());
     this.login = in.readString();
     this.password = in.readString();

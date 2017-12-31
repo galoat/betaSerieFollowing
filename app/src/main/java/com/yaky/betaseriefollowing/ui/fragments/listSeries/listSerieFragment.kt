@@ -86,7 +86,7 @@ class ListSerieFragment : Fragment(), AnkoLogger {
             finally{
                 uiThread {
                     if(result?.listShow != null) {
-                        listSeries.adapter = SerieListAdapter(result!!, listener)
+                        listSeries.adapter = SerieListAdapter(result!!, listener, user.token)
                     }else{
                         warn { "result is null " }
                     }
