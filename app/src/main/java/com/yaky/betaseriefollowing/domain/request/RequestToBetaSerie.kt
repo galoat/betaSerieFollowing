@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.yaky.betaseriefollowing.Exception.CredentialException
 import com.yaky.betaseriefollowing.R
-import com.yaky.betaseriefollowing.data.classes.Episode
 import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.data.classes.User
 import com.yaky.betaseriefollowing.domain.Command
@@ -15,9 +14,9 @@ import okhttp3.Request
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
+import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-
 
 //TODO use retrofit for multiple use ?
 class RequestToBetaSerie : Command<Shows>, AnkoLogger {
@@ -33,15 +32,19 @@ class RequestToBetaSerie : Command<Shows>, AnkoLogger {
         private val urlListSerie = App.instance.getString(R.string.betaSerieURL)
     }
 
-    override fun postEpisodeSeen(token: String, episode: Episode):Boolean{
-        info{"post Episode seen "+episode.title}
+    override fun postEpisodeSeen(token: String, episodeId:  String):Boolean{
+        info{"post Episode seen "+episodeId}
         val formBody = FormBody.Builder()
-                .add("id", episode.id.toString())
+                .add("id", episodeId)
                 .build()
         var request = Request.Builder().post(formBody)
                     .addHeader("Authorization", token)
         val  result = sendRequest(request, App.instance.getString(R.string.betaSerieURLPostSeen))
-        warn { result }
+        if(result !=null) {
+            if(JSONObject(result).getJSONArray("errors").length() != 0){
+                return false
+            }
+        }
         return true
     }
 

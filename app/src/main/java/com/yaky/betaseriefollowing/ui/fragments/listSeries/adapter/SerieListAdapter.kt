@@ -8,11 +8,10 @@ import com.yaky.betaseriefollowing.R
 import com.yaky.betaseriefollowing.data.classes.Serie
 import com.yaky.betaseriefollowing.data.classes.Shows
 import com.yaky.betaseriefollowing.domain.request.RequestToBetaSerie
+import com.yaky.betaseriefollowing.ui.App
 import com.yaky.betaseriefollowing.ui.fragments.listSeries.OnEpisodeSelected
 import kotlinx.android.synthetic.main.item_serie.view.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.info
+import org.jetbrains.anko.*
 
 
 ///TODO handle if a show is null
@@ -28,16 +27,30 @@ class SerieListAdapter(private val items: Shows, private val listener: OnEpisode
     }
 
     override fun getItemCount(): Int = items.size()
+     fun clear(position: Int) {
+         items.listShow[position].episode.removeAt(0)
+         notifyItemRemoved(position)
+    }
 
-    class ViewHolder(private val view: View, private val listener : OnEpisodeSelected): RecyclerView.ViewHolder(view), AnkoLogger{
 
+
+    inner class ViewHolder(private val view: View, private val listener : OnEpisodeSelected): RecyclerView.ViewHolder(view), AnkoLogger{
 
         fun bindSerie(serie: Serie, token: String){
             view.setOnLongClickListener {
                 info{"on Long Click on item ${serie.title}"}
-                doAsync {
-                    RequestToBetaSerie().postEpisodeSeen(token, serie.first())
-                }
+                episodeSeen(token, serie.first().id.toString(), { result: Boolean ->
+                    run {
+                        if (result) {
+                            App.daoSession.serieDao.deleteByKey(serie.first().id.toLong())
+                            clear(position)
+                        }else{
+                            ///TODO: SAVE THE DATA TO BE SEND WHEN THE SERVER WILL BE UP
+                            App.instance.toast(App.instance.getString(R.string.SerieListCouldNotReacheServer))
+                            info{"couldn't send watched to server"}
+                        }
+                    }
+                })
                 true
             }
             with(serie){
@@ -49,6 +62,12 @@ class SerieListAdapter(private val items: Shows, private val listener: OnEpisode
                 view.setOnClickListener{listener.onEpisodeSelected(first())}
             }
 
+        }
+        private fun episodeSeen(token: String, id: String,  callback: (m: Boolean) -> Unit){
+            doAsync {
+                val result = RequestToBetaSerie().postEpisodeSeen(token, id)
+                uiThread {callback(result)}
+            }
         }
     }
 

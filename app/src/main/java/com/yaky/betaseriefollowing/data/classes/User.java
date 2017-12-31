@@ -200,4 +200,5 @@ protected User(Parcel in) {
       return new User[size];
     }
   };
+
 }
