@@ -1,17 +1,20 @@
 package com.yaky.betaseriefollowing
 
+import com.yaky.betaseriefollowing.data.classes.User
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-import org.junit.Assert.*
 
-/**
- * Example local unit test, which will requestListSerie on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class UserTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun test_MD5() {
+        var user = User()
+        val password = "aaaaa"
+        val md5 = "594f803b380a41396ed63dca39503542"
+        assertEquals("fonction md5 notcorrectly implementd", md5,  User.convertPassMd5(password))
+        user.password = password
+        assertEquals("using geter the password is not set", user.password, md5)
+        user= User("test",password)
+        assertEquals("using construcor the password is not set",user.password, md5)
     }
 }
